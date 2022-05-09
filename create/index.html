@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strapi Demo | Create Example with Media</title>
+    <script type="module" src="/index.js" defer></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Strapi Uploads</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/create">Creating</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/update">Updating</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Resources
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" target="_blank" href="https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html">API Reference</a></li>
+                <li><a class="dropdown-item" target="_blank" href="https://docs.strapi.io/developer-docs/latest/plugins/upload.html#upload-file-during-entry-creation">Upload during creation</a></li>
+                <li><a class="dropdown-item" target="_blank" href="https://docs.strapi.io/developer-docs/latest/plugins/upload.html#upload-files-related-to-an-entry">Update Entry Media</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container pt-3">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
+          <h1>Create Example with Media</h1>
+
+          <form id="create" action="http://localhost:1337/api/examples?populate=image" method="post" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+              <label for="title" class="input-group-text">Title</label>
+              <input type="text" class="form-control" id="title" name="title" required/>
+            </div>
+
+            <div class="input-group mb-3">
+              <label for="example" class="input-group-text">Description</label>
+              <input type="text" disabled class="form-control" id="example" value="An example item description" />
+            </div>
+
+            <div class="input-group mb-3">
+              <input
+                type="file"
+                class="form-control"
+                id="image"
+                name="files.image"
+              />
+            </div>
+
+            <button type="reset" class="btn btn-outline-danger">Reset</button>
+            <button type="submit" class="btn btn-success">Create Example</button>
+          </form>
+
+          <div class="alert alert-info mt-3">
+            <h5>Read More</h5>
+
+            <a href="https://docs.strapi.io/developer-docs/latest/plugins/upload.html#upload-file-during-entry-creation">https://docs.strapi.io/developer-docs/latest/plugins/upload.html#upload-file-during-entry-creation</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
