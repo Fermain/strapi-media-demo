@@ -1,5 +1,6 @@
 import { onCreateExampleWithMedia } from './js/entry/create.js'
 import { onUpdateExample, populateSelects } from './js/entry/update.js';
+import { onUpload } from './js/upload.js';
 
 async function getExamples() {
   const response = await fetch('http://localhost:1337/api/examples?populate=image')
@@ -29,10 +30,15 @@ function createExample(example) {
 async function setup() {
   const createForm = document.querySelector('form#create');
   const updateForm = document.querySelector('form#update');
+  const uploadForm = document.querySelector('form#upload');
   const listContainer = document.querySelector('.card .list-group');
 
   if (createForm) {
     createForm.addEventListener('submit', onCreateExampleWithMedia)
+  }
+
+  if (uploadForm) {
+    uploadForm.addEventListener('submit', onUpload)
   }
 
   const examples = await getExamples();
@@ -40,32 +46,7 @@ async function setup() {
 
   if (updateForm) {
     populateSelects(examples, uploads)
-    updateForm.addEventListener('submit', async (event) => {
-      event.preventDefault()
-      const form = event.target
-      const formData = new FormData(form)
-      const body = new FormData()
-      const id = formData.get('refId');
-
-      if (id) {
-        formData.delete('refId')
-      }
-
-      const file = formData.get('files.image');
-      body.append('files.image', file)
-      formData.delete('files.image')
-      const data = Object.fromEntries(formData.entries())
-      body.append('data', JSON.stringify(data))
-
-      const response = await fetch(form.action + id, {
-        enctype: form.enctype,
-        method: 'put',
-        body
-      })
-
-      const result = await response.json()
-      console.log(result)
-    })
+    updateForm.addEventListener('submit', onUpdateExample)
   }
 
   if (listContainer) {

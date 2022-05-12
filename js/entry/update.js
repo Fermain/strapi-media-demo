@@ -1,20 +1,40 @@
-export async function onUpdateExample(event) {
-  event.preventDefault();
-  const form = event.target;
-  const body = new FormData(form);
-  const action = form.action;
-  const method = form.method;
-  const enctype = form.enctype;
+export function onChange(event) {
+  const title = document.querySelector('input#title');
+  title.value = event.target.options[event.target.options.selectedIndex].innerText
+}
 
-  const response = await fetch(action, { body, method, enctype });
-  const result = await response.json()
-  console.log(JSON.stringify(result, null, 2));
-  window.location.href = '/';
+export async function onUpdateExample(event) {
+  event.preventDefault()
+  const form = event.target
+  const formData = new FormData(form)
+  const body = new FormData()
+  const id = formData.get('refId');
+
+  if (id) {
+    formData.delete('refId')
+  }
+
+  const file = formData.get('files.image');
+  body.append('files.image', file)
+  formData.delete('files.image')
+  const data = Object.fromEntries(formData.entries())
+  body.append('data', JSON.stringify(data))
+
+  const response = await fetch(form.action + id, {
+    enctype: form.enctype,
+    method: 'put',
+    body
+  })
+
+  if (response.ok) {
+    window.location = '/'
+  }
 }
 
 export function populateSelects(examples, uploads) {
   if (examples) {
     const select = document.querySelector('select#examples');
+    select.addEventListener('input', onChange)
 
     if (!select) {
       return
@@ -28,6 +48,8 @@ export function populateSelects(examples, uploads) {
       option.innerText = example.attributes.title;
       select.append(option)
     })
+
+    onChange({target: select})
   }
 
   if (uploads) {
@@ -47,7 +69,7 @@ export function populateSelects(examples, uploads) {
       const label = item.querySelector('label');
       input.value = upload.id;
       input.id = `_${upload.id}`
-      label.for = input.id;
+      label.setAttribute('for', input.id)
       const img = item.querySelector('img')
       img.src = `http://localhost:1337${upload.formats.thumbnail.url}`
       return item
