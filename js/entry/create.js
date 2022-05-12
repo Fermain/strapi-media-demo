@@ -5,7 +5,8 @@ export async function onCreateExampleWithMedia(event) {
   const form = event.target;
   const action = form.action;
   const method = form.method;
-  const enctype = form.method;
+  const enctype = form.enctype;
+
   const originalFormData = new FormData(form);
   const body = new FormData();
 
