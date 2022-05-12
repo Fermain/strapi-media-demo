@@ -1,3 +1,5 @@
+import headers from '../headers.js'
+
 export function onChange(event) {
   const title = document.querySelector("input#title");
   title.value =
@@ -25,6 +27,7 @@ export async function onUpdateExample(event) {
     enctype: form.enctype,
     method: "put",
     body,
+    headers
   });
 
   if (response.ok) {
@@ -32,14 +35,15 @@ export async function onUpdateExample(event) {
   }
 }
 
-export async function populateSelects(examples, uploads) {
+export async function populateSelects(examples, uploads, reviews) {
   if (examples) {
     const select = document.querySelector("select#examples");
-    select.addEventListener("input", onChange);
 
     if (!select) {
       return;
     }
+
+    select.addEventListener("input", onChange);
 
     select.innerHTML = "";
 
@@ -81,5 +85,22 @@ export async function populateSelects(examples, uploads) {
     list.innerHTML = "";
 
     list.append(...elements);
+  }
+
+  if (reviews) {
+    const select = document.querySelector("select#reviews");
+
+    if (!select) {
+      return;
+    }
+
+    select.innerHTML = "";
+
+    reviews.map((review) => {
+      const option = document.createElement("option");
+      option.value = review.id;
+      option.innerText = review.attributes.body;
+      select.append(option);
+    });
   }
 }

@@ -1,3 +1,5 @@
+import headers from '../headers.js'
+
 export async function onCreateExampleWithMedia(event) {
   event.preventDefault();
   const form = event.target;
@@ -19,7 +21,7 @@ export async function onCreateExampleWithMedia(event) {
   const data = Object.fromEntries(originalFormData.entries());
   body.append("data", JSON.stringify(data));
 
-  const response = await fetch(action, { body, method, enctype });
+  const response = await fetch(action, { body, method, enctype, headers });
 
   if (response.ok) {
     window.location = "/";

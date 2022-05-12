@@ -32,9 +32,13 @@ export function createExample(example) {
     const item = template.content.cloneNode(true);
     const title = item.querySelector(".card-header");
     const img = item.querySelector("img");
+    const review = item.querySelector('.review')
     title.innerText = example.attributes.title;
     img.src = `http://localhost:1337${example.attributes.image.data.attributes.url}`;
     img.alt = example.attributes.image.data.attributes.name;
+    if (example.attributes.reviews.data[0]) {
+      review.innerText = example.attributes.reviews.data[0].attributes.body
+    }
     return item;
   }
 }
