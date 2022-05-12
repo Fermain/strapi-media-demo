@@ -32,7 +32,7 @@ export async function onUpdateExample(event) {
   }
 }
 
-export function populateSelects(examples, uploads) {
+export async function populateSelects(examples, uploads) {
   if (examples) {
     const select = document.querySelector("select#examples");
     select.addEventListener("input", onChange);
