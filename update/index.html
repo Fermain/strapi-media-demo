@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Strapi Demo | Create Example with Media</title>
+    <title>Strapi Demo | Update existing Entry Media</title>
     <script type="module" src="/index.js" defer></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -87,14 +87,27 @@
     <main class="container pt-3">
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-5">
-          <h1>Create Example with Media</h1>
+          <h1>Update existing Entry Media</h1>
 
           <form
-            id="create"
-            action="http://localhost:1337/api/examples?populate=image"
-            method="post"
+            id="update"
+            action="http://localhost:1337/api/examples/"
+            method="put"
             enctype="multipart/form-data"
           >
+            <div class="input-group mb-3">
+              <label for="examples" class="input-group-text">Item</label>
+              <select
+                type="text"
+                class="form-control"
+                id="examples"
+                name="refId"
+                required
+              >
+                <option selected>Loading Examples...</option>
+              </select>
+            </div>
+
             <div class="input-group mb-3">
               <label for="title" class="input-group-text">Title</label>
               <input
@@ -106,40 +119,35 @@
               />
             </div>
 
-            <div class="input-group mb-3">
-              <label for="example" class="input-group-text">Description</label>
-              <input
-                type="text"
-                disabled
-                class="form-control"
-                id="example"
-                value="An example item description"
-              />
-            </div>
-
-            <div class="input-group mb-3">
-              <input
-                type="file"
-                class="form-control"
-                id="image"
-                name="files.image"
-              />
+            <div class="list-group mb-3" id="uploadList">
+              <div class="list-group-item">Loading...</div>
+              <template>
+                <div class="list-group-item list-group-item-action">
+                  <label class="form-check" for="">
+                    <input
+                      class="form-check-input"
+                      name="image"
+                      type="radio"
+                      value=""
+                      id=""
+                    />
+                    <span class="form-check-label">
+                      <img
+                        src="http://localhost:1337/uploads/thumbnail_test_3b315c0634.png?width=960&height=600"
+                        alt=""
+                        class="img-fluid"
+                      />
+                    </span>
+                  </label>
+                </div>
+              </template>
             </div>
 
             <button type="reset" class="btn btn-outline-danger">Reset</button>
             <button type="submit" class="btn btn-success">
-              Create Example
+              Update Example
             </button>
           </form>
-
-          <div class="alert alert-info mt-3">
-            <h5>Read More</h5>
-
-            <a
-              href="https://docs.strapi.io/developer-docs/latest/plugins/upload.html#upload-file-during-entry-creation"
-              >https://docs.strapi.io/developer-docs/latest/plugins/upload.html#upload-file-during-entry-creation</a
-            >
-          </div>
         </div>
       </div>
     </main>

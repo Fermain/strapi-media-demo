@@ -22,5 +22,5 @@ export async function onCreateExampleWithMedia(event) {
   const response = await fetch(action, { body, method, enctype })
 
   const result = await response.json();
-  window.location = action
+  window.location = '/'
 }
