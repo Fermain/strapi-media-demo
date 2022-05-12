@@ -18,7 +18,7 @@ function createExample(example) {
   const template = document.querySelector('template#item');
   if (template) {
     const item = template.content.cloneNode(true);
-    const title = item.querySelector('h4')
+    const title = item.querySelector('.card-header')
     const img = item.querySelector('img')
     title.innerText = example.attributes.title
     img.src = `http://localhost:1337${example.attributes.image.data.attributes.url}`
@@ -31,8 +31,7 @@ async function setup() {
   const createForm = document.querySelector('form#create');
   const updateForm = document.querySelector('form#update');
   const uploadForm = document.querySelector('form#upload');
-  const listContainer = document.querySelector('.card .list-group');
-
+  const listContainer = document.querySelector('#items')
   if (createForm) {
     createForm.addEventListener('submit', onCreateExampleWithMedia)
   }
