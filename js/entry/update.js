@@ -1,83 +1,85 @@
 export function onChange(event) {
-  const title = document.querySelector('input#title');
-  title.value = event.target.options[event.target.options.selectedIndex].innerText
+  const title = document.querySelector("input#title");
+  title.value =
+    event.target.options[event.target.options.selectedIndex].innerText;
 }
 
 export async function onUpdateExample(event) {
-  event.preventDefault()
-  const form = event.target
-  const formData = new FormData(form)
-  const body = new FormData()
-  const id = formData.get('refId');
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  const body = new FormData();
+  const id = formData.get("refId");
 
   if (id) {
-    formData.delete('refId')
+    formData.delete("refId");
   }
 
-  const file = formData.get('files.image');
-  body.append('files.image', file)
-  formData.delete('files.image')
-  const data = Object.fromEntries(formData.entries())
-  body.append('data', JSON.stringify(data))
+  const file = formData.get("files.image");
+  body.append("files.image", file);
+  formData.delete("files.image");
+  const data = Object.fromEntries(formData.entries());
+  body.append("data", JSON.stringify(data));
 
   const response = await fetch(form.action + id, {
     enctype: form.enctype,
-    method: 'put',
-    body
-  })
+    method: "put",
+    body,
+  });
 
   if (response.ok) {
-    window.location = '/'
+    window.location = "/";
   }
 }
 
 export function populateSelects(examples, uploads) {
   if (examples) {
-    const select = document.querySelector('select#examples');
-    select.addEventListener('input', onChange)
+    const select = document.querySelector("select#examples");
+    select.addEventListener("input", onChange);
 
     if (!select) {
-      return
+      return;
     }
 
-    select.innerHTML = '';
+    select.innerHTML = "";
 
-    examples.map(example => {
-      const option = document.createElement('option');
+    examples.map((example) => {
+      const option = document.createElement("option");
       option.value = example.id;
       option.innerText = example.attributes.title;
-      select.append(option)
-    })
+      select.append(option);
+    });
 
-    onChange({target: select})
+    onChange({ target: select });
   }
 
   if (uploads) {
-    const list = document.querySelector('#uploadList');
+    const list = document.querySelector("#uploadList");
 
     if (!list) {
-      return
+      return;
     }
 
-    const template = list.querySelector('template');
-    const elements = uploads.map(upload => {
-      if (!upload.formats || !upload.formats.thumbnail) {
-        return
-      }
-      const item = template.content.cloneNode(true);
-      const input = item.querySelector('input');
-      const label = item.querySelector('label');
-      input.value = upload.id;
-      input.id = `_${upload.id}`
-      label.setAttribute('for', input.id)
-      const img = item.querySelector('img')
-      img.src = `http://localhost:1337${upload.formats.thumbnail.url}`
-      return item
-    }).filter(Boolean)
+    const template = list.querySelector("template");
+    const elements = uploads
+      .map((upload) => {
+        if (!upload.formats || !upload.formats.thumbnail) {
+          return;
+        }
+        const item = template.content.cloneNode(true);
+        const input = item.querySelector("input");
+        const label = item.querySelector("label");
+        input.value = upload.id;
+        input.id = `_${upload.id}`;
+        label.setAttribute("for", input.id);
+        const img = item.querySelector("img");
+        img.src = `http://localhost:1337${upload.formats.thumbnail.url}`;
+        return item;
+      })
+      .filter(Boolean);
 
-    list.innerHTML = '';
+    list.innerHTML = "";
 
-    list.append(...elements)
+    list.append(...elements);
   }
-
 }

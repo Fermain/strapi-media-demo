@@ -1,5 +1,5 @@
 export async function onCreateExampleWithMedia(event) {
-  event.preventDefault()
+  event.preventDefault();
   const form = event.target;
   const action = form.action;
   const method = form.method;
@@ -8,19 +8,20 @@ export async function onCreateExampleWithMedia(event) {
   const body = new FormData();
 
   for (const [key, value] of originalFormData.entries()) {
-    if (key.includes('files.')) {
+    if (key.includes("files.")) {
       body.append(key, value);
       // Add this to the request body
-      originalFormData.delete(key)
+      originalFormData.delete(key);
       // Remove it from the original form data list
     }
   }
 
   const data = Object.fromEntries(originalFormData.entries());
-  body.append('data', JSON.stringify(data));
-  
-  const response = await fetch(action, { body, method, enctype })
+  body.append("data", JSON.stringify(data));
 
-  const result = await response.json();
-  window.location = '/'
+  const response = await fetch(action, { body, method, enctype });
+
+  if (response.ok) {
+    window.location = "/";
+  }
 }

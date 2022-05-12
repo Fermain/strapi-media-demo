@@ -3,9 +3,9 @@ export async function onUpload(event) {
   const form = event.target;
   const body = new FormData(form);
   const method = form.method;
-  const enctype = form.enctype
-  const response = await fetch(form.action, { method, enctype, body })
+  const enctype = form.enctype;
+  const response = await fetch(form.action, { method, enctype, body });
   if (response.ok) {
-    window.location = '/'
+    window.location = "/";
   }
 }
